@@ -1,0 +1,7 @@
+*.csv
+*.joblib
+data/
+mistake.txt
+.vscode/
+venv/
+artifacts/
