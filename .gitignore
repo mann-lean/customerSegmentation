@@ -5,3 +5,4 @@ mistake.txt
 .vscode/
 venv/
 artifacts/
+.gitignore
