@@ -4,6 +4,7 @@ import numpy as np
 import plotly.express as px
 import joblib
 from sklearn.metrics import silhouette_score
+from pathlib import Path
 
 # 1. Page Configuration
 st.set_page_config(page_title="Customer Segmentation Dashboard", layout="wide")
@@ -12,10 +13,12 @@ st.title("🛍️ E-Commerce Customer Segmentation & RFM Dashboard")
 st.markdown("This dashboard showcases customer behavior patterns, RFM metrics, and K-Means clustering segments.")
 
 # 2. Load Data (Caching it so it loads fast)
+project_root=Path(__file__).resolve().parent.parent
 @st.cache_data
 def load_data():
     # Replace this with your final processed dataframe or CSV output from your notebook
-    df=pd.read_csv(r'E:\dsProject\customerSegmentation\data\clean_Customer_RetailNw4.csv')
+    data_path=project_root / 'data' / 'clean_Customer_RetailNw4.csv'
+    df=pd.read_csv(data_path)
     # NOTE: Ideally, you load a pre-computed RFM dataframe with cluster labels assigned!
     return df
 # data loading
@@ -840,7 +843,8 @@ with tab5:
         #             }
         try:
             # 1. Load pipeline artifacts securely
-            rfcSegment=joblib.load(r'artifacts\RFCsegmentaion.joblib')
+            model_path=project_root / 'artifacts' / 'RFCsegmentaion.joblib'
+            rfcSegment=joblib.load(model_path)
             Customer_Segmentation=rfcSegment.predict([[user_r,user_f,user_m]])[0]
             # st.markdown(f'{Customer_Segmentation}')
 
