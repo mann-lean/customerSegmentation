@@ -10,7 +10,7 @@ from pathlib import Path
 st.set_page_config(page_title="Customer Segmentation Dashboard", layout="wide")
 
 st.title("🛍️ E-Commerce Customer Segmentation & RFM Dashboard")
-st.markdown("This dashboard showcases customer behavior patterns, RFM metrics, and K-Means clustering segments.")
+st.markdown("This dashboard showcases customer behavior patterns, actionable business insights, RFM metrics, and real-time machine learning classification.")
 
 # 2. Load Data (Caching it so it loads fast)
 project_root=Path(__file__).resolve().parent.parent
@@ -87,7 +87,7 @@ st.html(
     """
 )
 # tABS sETups
-tab1,tab2,tab3,tab4,tab5,tab6=st.tabs(['ℹ️ About','📊 Analytics','🤖 RFM Clustering','Customer Look UP','ML CLustering','Building Process'])
+tab1,tab2,tab3,tab4,tab5,tab6=st.tabs(['ℹ️ About','📊 Analytics','🤖 RFM Clustering','🔍 Customer Lookup','🔮 Segmentation Predictor','⚙️ Building Process'])
 
 
 with tab1:
@@ -780,12 +780,12 @@ with tab4:
 # # Clustering Tab5
 # Ensure this script has access to your artifacts directory
 with tab5:
-    st.header("🤖 Machine Learning Customer Clustering")
+    st.header("🔮 Machine Learning Customer Classification")
     st.markdown(
         """
-        Predict customer personas instantly using an unsupervised **K-Means Clustering** engine. 
-        The system dynamically screens for high-value outliers before passing behavioral metrics 
-        through log transformation and standardisation scalers.
+        Predict customer personas instantly using a supervised **Random Forest Classifier**. 
+        By leveraging tree-based machine learning, this inference engine natively handles high-value outliers 
+        and bypasses clunky feature scaling—processing raw behavioral metrics to deliver real-time strategic segments.
         """
     )
     st.markdown("---")
