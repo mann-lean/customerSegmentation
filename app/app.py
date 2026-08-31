@@ -842,7 +842,7 @@ with tab5:
             # 1. Load pipeline artifacts securely
             rfcSegment=joblib.load(r'artifacts\RFCsegmentaion.joblib')
             Customer_Segmentation=rfcSegment.predict([[user_r,user_f,user_m]])[0]
-            st.markdown(f'{Customer_Segmentation}')
+            # st.markdown(f'{Customer_Segmentation}')
 
             # 2. Unified Persona Dictionary
             CLUSTER_LABELS = {

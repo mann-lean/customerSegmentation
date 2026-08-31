@@ -1,7 +1,5 @@
-*.csv
-*.joblib
-data/
+online_retail_II.csv
+rfm_Customer_cluster.csv
 mistake.txt
 .vscode/
 venv/
-artifacts/
