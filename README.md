@@ -13,19 +13,19 @@
 ## 👁️ Sneak Peek
 __Segmentation Predictor__
 
-![App Demo](artifacts\vis\clustClass.gif) 
+![App Demo](artifacts/vis/clustClass.gif) 
 
 __Business Analytics__
 
-![App Demo](artifacts\vis\businesAnalytics.gif) 
+![App Demo](artifacts/vis/businesAnalytics.gif) 
 
 __Customer Segentation__
 
-![App Demo](artifacts\vis\cluster.png) 
+![App Demo](artifacts/vis/cluster.png) 
 
-__Customer Loopup__
+__Customer Lookup__
 
-![App Demo](artifacts\vis\customerLookup.gif) 
+![App Demo](artifacts/vis/customerLookup.gif) 
 
 ---
 
