@@ -37,11 +37,7 @@ if country_filters:
 else:
     filtered_df=df.copy()
 
-# /need to date range filter
-# month_order = [
-#     "January", "February", "March", "April", "May", "June",
-#     "July", "August", "September", "October", "November", "December"
-# ]# for sorting Month order
+# month filter
 month_order=[
     'December(2009)',
     'January(2010)',
@@ -64,6 +60,18 @@ months__filter=st.sidebar.multiselect(
 )
 if months__filter:
     filtered_df=filtered_df[filtered_df['month'].isin(months__filter)]
+
+# Date Range
+start_date,end_date=st.sidebar.slider(
+    label='Select Date Range [1-31]',
+    min_value=1,
+    max_value=31,
+    value=(1,31) #default   
+)
+if start_date and end_date:
+    converted_dates = pd.to_datetime(filtered_df['InvoiceDate'])
+    invoice_days=converted_dates.dt.day
+    filtered_df = filtered_df[(invoice_days >= start_date) & (invoice_days <= end_date)]
 
 # customer_segment=st.sidebar.select
 segment_filter=st.sidebar.multiselect(
@@ -222,6 +230,61 @@ with tab1:
             """
         )
     st.divider()
+    
+    st.subheader("🔍 Strategic Recommendations for December Revenue Growth")
+
+    # 1. State the Problem First
+    st.markdown(
+        """
+        ### 📉 The Problem: Analyzing December 1st - 9th
+        Our retail e-commerce dataset ranges from December 1, 2009, to December 9, 2010. By deeply analyzing the historical data, this interactive dashboard highlights a critical revenue gap that needs immediate attention.
+
+        **Key Insights (Dec 1-9, 2010 vs. Nov 1-9, 2010):**
+        * While **Frequency** (order volume) increased by **2.04%**, overall **Revenue** actually dropped by **1.4%**. 
+        * Compared to the same 9-day window in the previous year, revenue has also declined. 
+        
+        **The Goal:** We need a powerful, data-driven strategy for the remaining 22 days of December to recover this deficit and exceed last month's revenue.
+        """
+    )
+
+    # 2. Provide the Solution
+    with st.expander('🎯 View The Action Plan (Dec 10 - Dec 31)', expanded=False):
+        st.success(
+            """
+            ### The Ultimate Decision Playbook
+            Because December is a peak shopping season, our strategy must be razor-sharp. We will use our machine learning segments to dictate exactly who to prioritize to maximize ROI.
+
+            #### Phase 1: Date Range 10 to 20 (The Peak Holiday Shipping Window)
+            We expect a high volume of traffic during this window. Our goal is to maximize basket size and secure high-value orders before the holiday shipping cutoff.
+            
+            * **Priority:** Enterprise / VIP Whales ➔ Champions/VIPs ➔ New / Promising Customers ➔ Loyal Everyday Shoppers
+            * **Capitalize on the Volume Drivers (Champions/VIPs):** This is our absolute largest active segment, making up **53.4% of our customers** and driving **44.0% of the revenue**. They are highly engaged and ready to buy right now.
+                * *Action:* Launch tiered holiday bundles (e.g., "Buy 3, Get 1 Free") and push "Last Chance for Guaranteed Christmas Delivery" messaging. Since they already shop frequently, increasing their basket size during this window will yield massive returns.
+            * **Deploy White-Glove Service for Whales (Enterprise / VIP Whales):** These are incredibly lucrative accounts, representing only **22.0% of the base** but generating a staggering **43.7% of total revenue**. 
+                * *Action:* Do not offer them generic discounts—they do not need financial incentives to buy. Instead, provide personal outreach, exclusive corporate gifting catalogs, and complimentary priority overnight shipping. Protect this profit margin at all costs.
+            * **Convert the Holiday Browsers (New / Promising Customers):** Making up **17.2% of customers** but only 9.1% of revenue, these are likely users who discovered the site for holiday shopping but haven't committed to large orders yet.
+                * *Action:* Trigger automated "Welcome" flash-sales with countdown timers (e.g., "15% off your first holiday order, expires in 24 hours") to force a quick conversion before the December 20th shipping cutoff.
+            * **Upsell the Loyalists (Loyal Everyday Shoppers):** A smaller segment this month (**7.4% of users**, 3.1% of revenue). 
+                * *Action:* Use targeted cross-selling. Recommend stocking stuffers and lower-ticket, high-margin add-ons directly at checkout to bump up their Average Order Value (AOV).
+
+            ---
+
+            #### Phase 2: Date Range 21 to 31 (Post-Holiday Clearance & Year-End Transition)
+            The holiday shipping cutoff has passed. The strategy shifts from urgent gifting to inventory liquidation and gift-card redemption.
+            
+            * **Priority:** Champions/VIPs ➔ New / Promising Customers ➔ Loyal Everyday Shoppers ➔ Enterprise / VIP Whales
+            * **Liquidate via New / Promising Customers:** This group (17.2% of the base) is highly price-sensitive and likely hunting for post-Christmas bargains.
+                * *Action:* Launch massive "End of Year Clearance" and "Boxing Day" sales. Use targeted deep discounts to clear out unsold holiday warehouse inventory without cannibalizing the margins of our higher-tier segments. 
+            * **Capture Gift Card Revenue from Champions:** Our largest volume group (53.4% of the base) is highly engaged and likely has holiday cash or gift cards to spend on themselves.
+                * *Action:* Run a "Treat Yourself" campaign. Offer them exclusive early access to upcoming January product drops or special post-holiday bundles to maintain their buying momentum.
+            * **Soft Touch for Enterprise Whales:** These massive accounts (driving 43.7% of revenue) are likely closing their own fiscal year-end books or out of the office for the holidays. 
+                * *Action:* Pause aggressive sales pitches. Send a highly personalized "Thank You for a Great Year" executive message and a soft preview of Q1 catalogs. Focus on setting up January restocking meetings rather than forcing late-December sales.
+            * **Incentivize Loyal Everyday Shoppers:** 
+                * *Action:* Deploy "Buy One, Get One Deeply Discounted" offers on clearance items. This increases their historically lower basket sizes while helping the business clear out seasonal warehouse space before the new year.
+            """
+        )
+
+    st.divider()
     st.subheader("🧠 Methodology: The 'Cluster-Then-Predict' Pipeline")
     st.markdown(
         """
@@ -365,7 +428,7 @@ with tab2:
     st.subheader("🚀 Customer Value Segment Breakdown")
 
     st.markdown('Segment Financial Snapshot')
-    st.caption("Juxtaposition of specific user base volume against corporate profit contribution.")
+    st.caption("Just a position of specific user base volume against corporate profit contribution.")
     segment_summary=filtered_df.groupby('ClusterLabel').agg(
     Customer_count=('Customer ID','nunique'),
     Revenue=('TotalSum','sum')).reset_index()
