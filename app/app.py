@@ -285,6 +285,7 @@ with tab1:
         )
 
     st.divider()
+    
     st.subheader("🧠 Methodology: The 'Cluster-Then-Predict' Pipeline")
     st.markdown(
         """
